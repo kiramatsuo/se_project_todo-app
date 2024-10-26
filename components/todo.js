@@ -25,6 +25,20 @@ class Todo {
     this._todoLabel.setAttribute("for", `todo-${this._data.id}`);
   }
 
+  _generateDatesEl() {
+    this._dueDate = new Date(this._data.date);
+    if (!isNaN(this._dueDate)) {
+      this._todoDate.textContent = `Due: ${this._dueDate.toLocaleString(
+        "en-US",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        }
+      )}`;
+    }
+  }
+
   getView() {
     this._todoElement = this._templateElement.content
       .querySelector(".todo")
@@ -37,6 +51,8 @@ class Todo {
     this._todoNameEl.textContent = this._data.name;
 
     this._generateCheckboxEl();
+
+    this._generateDatesEl();
 
     this._setEventListeners();
 
