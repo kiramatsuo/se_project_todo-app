@@ -44,26 +44,38 @@ section.renderItems();
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-  handleFormSubmit: () => {},
+  handleFormSubmit: (evt) => {
+    // move code from existing submission handler to here
+
+    const date = new Date(dateInput);
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+
+    const id = uuidv4();
+    const values = { name, date, id };
+    const todo = generateTodo(values);
+    addItem(todo);
+    addTodoPopup.close();
+    newTodoValidator.resetValidation();
+  },
 });
 
 addTodoPopup.setEventListeners();
 
-addTodoForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const name = evt.target.name.value;
-  const dateInput = evt.target.date.value;
+// addTodoForm.addEventListener("submit", (evt) => {
+//   evt.preventDefault();
+//   const name = evt.target.name.value;
+//   const dateInput = evt.target.date.value;
 
-  const date = new Date(dateInput);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+//   const date = new Date(dateInput);
+//   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-  const id = uuidv4();
-  const values = { name, date, id };
-  const todo = generateTodo(values);
-  addItem(todo);
-  addTodoPopup.close();
-  newTodoValidator.resetValidation();
-});
+//   const id = uuidv4();
+//   const values = { name, date, id };
+//   const todo = generateTodo(values);
+//   addItem(todo);
+//   addTodoPopup.close();
+//   newTodoValidator.resetValidation();
+// });
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 
