@@ -44,8 +44,9 @@ section.renderItems();
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-  handleFormSubmit: (evt) => {
-    // move code from existing submission handler to here
+  handleFormSubmit: (inputValues) => {
+    const name = inputValues.target.name.value;
+    const dateInput = inputValues.target.date.value;
 
     const date = new Date(dateInput);
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
@@ -53,29 +54,13 @@ const addTodoPopup = new PopupWithForm({
     const id = uuidv4();
     const values = { name, date, id };
     const todo = generateTodo(values);
-    addItem(todo);
+    section.addItem(todo);
     addTodoPopup.close();
     newTodoValidator.resetValidation();
   },
 });
 
 addTodoPopup.setEventListeners();
-
-// addTodoForm.addEventListener("submit", (evt) => {
-//   evt.preventDefault();
-//   const name = evt.target.name.value;
-//   const dateInput = evt.target.date.value;
-
-//   const date = new Date(dateInput);
-//   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-
-//   const id = uuidv4();
-//   const values = { name, date, id };
-//   const todo = generateTodo(values);
-//   addItem(todo);
-//   addTodoPopup.close();
-//   newTodoValidator.resetValidation();
-// });
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 
