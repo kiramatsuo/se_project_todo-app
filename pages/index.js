@@ -21,19 +21,31 @@ const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
 
 const generateTodo = (data) => {
-  const todo = new Todo(data, "#todo-template", handleCheck, handleDelete);
+  const todo = new Todo(
+    data,
+    "#todo-template",
+    handleCheck,
+    handleDelete,
+    handleAddTodo
+  );
   const todoElement = todo.getView();
   return todoElement;
 };
 
 function handleCheck(completed) {
   todoCounter.updateCompleted(completed);
+  todoCounter.updateTotal(true);
 }
 
 function handleDelete(completed) {
   if (completed) {
     todoCounter.updateCompleted(false);
   }
+  todoCounter.updateTotal(false);
+}
+
+function handleAddTodo(completed) {
+  todoCounter.updateTotal(true);
 }
 
 addTodoButton.addEventListener("click", () => {
@@ -68,6 +80,7 @@ const addTodoPopup = new PopupWithForm({
     const values = { name, date, id };
     const todo = generateTodo(values);
     section.addItem(todo);
+    todoCounter.updateTotal(true);
     addTodoPopup.close();
     newTodoValidator.resetValidation();
   },
