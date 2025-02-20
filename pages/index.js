@@ -34,7 +34,6 @@ const generateTodo = (data) => {
 
 function handleCheck(completed) {
   todoCounter.updateCompleted(completed);
-  todoCounter.updateTotal(true);
 }
 
 function handleDelete(completed) {
