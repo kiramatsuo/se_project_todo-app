@@ -45,7 +45,7 @@ function handleDelete(completed) {
 }
 
 function handleAddTodo(completed) {
-  todoCounter.updateTotal(true);
+  todoCounter.updateTotal(false);
 }
 
 addTodoButton.addEventListener("click", () => {
